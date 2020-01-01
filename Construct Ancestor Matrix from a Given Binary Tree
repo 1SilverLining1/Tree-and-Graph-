@@ -1,0 +1,21 @@
+void dfs ( Node * root )
+	{
+		if ( root == NULL ) 
+			return ; 
+		if ( root -> left  ) 
+			matrix [ root -> data ] [ root -> left -> data ] = 1 ; 
+		if ( root -> right ) 
+			matrix [ root -> data ] [ root -> right  -> data ] = 1 ; 
+		dfs ( root -> left ) ; 
+		dfs ( root -> right ) ; 
+		for ( int i = 1 ; i <=n ; i ++)
+		{
+			if ( root -> left != NULL  and matrix [ root -> left -> data ] [ i ] ) 
+				matrix [ root -> data ] [ i ] = 1 ; 
+				
+			
+			if ( root -> right != NULL and matrix [ root -> right -> data ] [ i ] ) 
+				matrix [ root -> data ] [ i ] = 1 ; 
+				
+		}
+	}
