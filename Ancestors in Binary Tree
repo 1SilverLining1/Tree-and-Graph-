@@ -1,0 +1,37 @@
+//https://practice.geeksforgeeks.org/problems/ancestors-in-binary-tree/1/
+
+Node * util ( Node * root , int target , vector < int > &v  )
+{
+    if ( root == NULL )
+        return  NULL ;
+
+    if ( root -> data ==  target )
+        return root ; 
+    
+    Node * left = util ( root -> left , target , v  ) ; 
+    Node * right = util ( root -> right ,target ,  v ) ; 
+    
+    if ( left != NULL and left -> data == target )
+    {
+        v.push_back ( root -> data ) ; 
+        return left ; 
+    }
+    else if ( right != NULL and right -> data == target )
+    {
+            v.push_back ( root -> data  ) ;
+            return right ; 
+    }
+    return NULL ; 
+}
+
+// Function should print all the ancestor of the target node
+bool printAncestors(struct Node *root, int target)
+{
+        vector < int > v ; 
+        util ( root ,target ,  v ) ; 
+        for ( int i = 0 ; i < v.size () ; i ++ ) 
+            cout << v [ i ] << " " ; 
+        cout << endl ;
+   
+     // Code here
+}
