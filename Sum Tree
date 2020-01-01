@@ -1,0 +1,24 @@
+//https://practice.geeksforgeeks.org/problems/sum-tree/1
+
+bool ans ; 
+int util ( Node * root  )
+{
+    
+     if ( root == NULL )
+        return 0 ; 
+    if ( root -> left == NULL and root -> right == NULL )
+        return root -> data ; 
+     int leftsum = util  ( root -> left ) ; 
+     int rightsum = util  ( root -> right ) ; 
+     if ( leftsum + rightsum != root -> data )
+         ans = false ; 
+     return  root -> data + leftsum + rightsum   ;
+     
+}
+bool isSumTree(Node* root)
+{
+     ans = true ;
+     util ( root  ) ; 
+     //cout << ans << endl ; ; 
+     return ans ; 
+}
