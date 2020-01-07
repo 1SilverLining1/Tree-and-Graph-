@@ -1,0 +1,30 @@
+//https://practice.geeksforgeeks.org/problems/children-sum-parent/1/
+void util ( Node * root , bool &flag )
+{
+    if ( root == NULL or ( root -> left == NULL and root -> right == NULL )  )
+        return ; 
+    
+    int left = 0 , right = 0 ; 
+    //cout << root -> data << " " ; 
+    if ( root -> left )
+        left = root -> left -> data ; 
+    if ( root -> right)
+        right = root -> right -> data ;
+   // cout << root -> data << " " << left << " " <<  " " << right << endl  ; 
+
+    if ( root -> data != left + right )
+    {
+        flag = false ;
+        return ; 
+    }
+    
+    util ( root -> left , flag ) ; 
+    util ( root -> right , flag ) ; 
+}
+int isSumProperty(Node *node)
+{
+    bool flag = true ; 
+    util ( node , flag ) ; 
+    return flag ; 
+    
+}
