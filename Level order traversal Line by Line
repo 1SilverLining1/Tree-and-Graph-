@@ -1,0 +1,24 @@
+//https://practice.geeksforgeeks.org/problems/level-order-traversal-line-by-line/1/
+void levelOrder(Node* node)
+{
+    
+    queue <  Node* > q ; 
+    q.push ( node  ) ;  
+    while ( !q.empty() )
+    {
+        int n = q.size() ; 
+        while ( n-- )
+        {
+            Node * p  = q.front() ; 
+            cout << p -> data << " " ; 
+            q.pop() ; 
+            if ( p  -> left != NULL )
+                q.push ( p-> left ) ; 
+            if ( p-> right != NULL )
+                q.push (  p-> right ) ; 
+        }
+        cout << "$"  << " " ; 
+        
+    }
+ 
+}
