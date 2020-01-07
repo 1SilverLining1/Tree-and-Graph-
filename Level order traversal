@@ -1,0 +1,21 @@
+//https://practice.geeksforgeeks.org/problems/level-order-traversal/1/
+
+//Silver_Lining 
+//You are required to complete this method
+void levelOrder(Node* node)
+{
+    queue <  Node* > q ; 
+    q.push ( node  ) ;  
+    while ( !q.empty() )
+    {
+        Node * p  = q.front() ; 
+        cout << p -> data << " " ; 
+        q.pop() ; 
+        if ( p  -> left != NULL )
+            q.push ( p-> left ) ; 
+        if ( p-> right != NULL )
+            q.push (  p-> right ) ; 
+        
+    }
+    
+}
