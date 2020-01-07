@@ -1,0 +1,25 @@
+//https://practice.geeksforgeeks.org/problems/diagonal-sum-in-binary-tree/1
+void diagonalSum(Node* root) {
+    
+    
+    queue < pair < Node* , int > > q ; 
+    q.push ( { root , 0 } ) ;
+    map < int ,int  > mp ;  
+    while ( !q.empty() )
+    {
+        pair < Node * , int >  p = q.front() ; 
+        q.pop() ; 
+        mp [ p.second ] += p .first -> data ; 
+        if ( p.first -> left != NULL )
+            q.push ( { p.first -> left , p.second + 1 } ) ; 
+        if ( p.first -> right != NULL )
+            q.push ( { p.first -> right , p.second  } ) ; 
+        
+    }
+    for ( auto it : mp )
+    {
+        cout << it .second << " " ; 
+    }
+    cout << endl ; 
+    // Add your code here
+}
