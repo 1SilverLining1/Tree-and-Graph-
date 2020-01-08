@@ -1,0 +1,22 @@
+//https://practice.geeksforgeeks.org/problems/odd-even-level-difference/1
+//Silver_Lining
+void dfs ( Node * root , int level , int &oddsum , int &evensum  )
+{
+    if ( !root )
+        return ; 
+    if ( level & 1 )
+        oddsum += root -> data ; 
+    else 
+        evensum += root -> data ; 
+    dfs ( root -> left ,  level + 1  , oddsum , evensum ) ; 
+    dfs ( root -> right  , level + 1 , oddsum , evensum ) ; 
+}
+/*You are required to complete this function*/
+int getLevelDiff(Node *root)
+{
+        int oddsum = 0 , evensum = 0 ; 
+        dfs ( root , 1 , oddsum, evensum  ) ; 
+        return oddsum - evensum ; 
+   //Your code here
+}
+
