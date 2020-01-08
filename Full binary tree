@@ -1,0 +1,17 @@
+//https://practice.geeksforgeeks.org/problems/full-binary-tree/1
+//Silver_Lining 
+bool isFullTree (struct Node* root)
+{
+    
+     if ( !root )
+        return true ; 
+    
+     if ( root -> left and !root -> right )
+        return false ; 
+        
+    if ( root -> right and !root-> left )
+        return false  ; 
+        
+    return isFullTree( root-> left ) and isFullTree( root -> right ) ; 
+//add code here.
+}
