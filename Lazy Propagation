@@ -1,0 +1,160 @@
+//https://www.spoj.com/problems/HORRIBLE/
+
+#include<bits/stdc++.h>
+using namespace std;
+//silver_Lining 
+typedef long long ll   ;
+const ll  N = 1e6 + 1 ; 
+
+ll   construct ( ll  index , ll  start , ll  end , ll  arr [] , ll  Tree []  , ll  Lazy [ ]    )
+{
+	if ( start == end ) 
+	{
+		Tree [ index ] = arr [ start ]  ; 
+		return Tree [ index ] ; 
+	}
+	
+	ll  mid = ( start + end ) / 2 ; 
+	ll  left = construct ( 2 * index + 1 , start , mid , arr , Tree , Lazy  ) ; 
+	ll  right = construct ( 2 * index + 2 , mid + 1 , end , arr, Tree , Lazy  ) ; 
+	Tree [ index ] = Tree [ 2 * index + 1 ] + Tree [ 2 * index + 2 ] ; 
+	return Tree [ index ] ; 
+}
+
+
+ll   update ( ll  ss , ll  se , ll  index , ll  qs , ll  qe , ll  val , ll  Tree []  , ll  Lazy []  )
+{
+
+	
+	if ( Lazy [ index ] )
+	{
+		Tree [ index ] =  ( se - ss + 1 ) * Lazy [ index ]   + Tree [ index] ;
+		
+		Lazy [ 2 * index + 1 ] = Lazy [ 2 * index + 1 ]  + Lazy [ index ]  ;
+		Lazy [ 2 * index + 2 ] = Lazy [ 2 * index + 2 ]  + Lazy [ index ]  ; 
+		Lazy [ index ] = 0 ;
+	}
+	
+	if ( ss > qe or se < qs )
+	{
+		//cout << index << " ***" << "  "  ;  
+		//cout << Tree [ index ] << " " << endl ; 
+		return Tree [ index ]  ; 
+	}
+
+	if ( ss >= qs and se <= qe )
+	{
+		
+		Tree [ index ] = ( se - ss + 1 ) * val  + Tree [ index] ;
+		
+		Lazy [ 2 * index + 1 ] = Lazy [ 2 * index + 1 ]  + Lazy [ index ]  + val ; 
+		Lazy [ 2 * index + 2 ] = Lazy [ 2 * index + 2 ]  + Lazy [ index ]  + val ; 
+		
+		//Lazy [ index ] = 0 ; 
+				//cout << index << " ***" << "  "  ;  
+		//cout << Tree [ index ] << " " << endl ; 
+		return Tree [ index ]  ; 
+		
+	}
+	
+	
+	ll  mid = ( ss + se ) / 2 ; 
+	ll  left = update ( ss , mid  , 2 * index + 1 , qs , qe , val  , Tree , Lazy ) ; 
+	ll  right = update ( mid + 1 , se , 2 * index + 2 , qs , qe , val , Tree , Lazy ) ;
+	Tree [ index ] = Tree [ 2 * index + 1 ] + Tree [ 2 * index + 2 ] ;  ;
+			//cout << index << " ***" << "  "  ;  
+	//cout << Tree [ index ] << " " << endl ; 
+	return Tree [ index ] ; 
+	
+}
+ll   query ( ll  ss , ll  se , ll  index , ll  qs , ll  qe , ll  Tree [] , ll  Lazy [] )
+{
+
+		
+	if ( Lazy [ index ] )
+	{
+		Tree [ index ] =  ( se - ss + 1 ) * Lazy [ index ]   + Tree [ index] ;
+		
+		Lazy [ 2 * index + 1 ] = Lazy [ 2 * index + 1 ]  + Lazy [ index ]  ;
+		Lazy [ 2 * index + 2 ] = Lazy [ 2 * index + 2 ]  + Lazy [ index ]  ; 
+		Lazy [ index ] = 0 ;
+		
+	}
+	
+	if ( ss > qe or se < qs )
+		return 0 ; 
+	
+	
+	if (  ss >= qs and se <= qe  )
+			return  Tree [ index ] ;
+	
+	ll  mid = ( ss + se ) / 2 ; 
+	ll  left = query  ( ss , mid  , 2 * index + 1 , qs , qe , Tree , Lazy ) ; 
+	ll  right = query  ( mid + 1 , se , 2 * index + 2 , qs , qe , Tree , Lazy ) ;
+	return left + right ; 
+  
+}
+
+ int main() {
+   
+   
+   	ios_base::sync_with_stdio(0);cin.tie(0 );cout.tie(0) ;
+   	ll  T ; 
+   	cin >> T  ; 
+   	while ( T-- )
+   	{
+	  	ll   n , q ; 
+	  	cin >> n >> q ; 
+	  	ll  arr [ n ] ; 
+	  	ll  Tree [ N  ] , Lazy [ N  ] ;
+	  	memset ( Lazy , 0 , sizeof ( Lazy)) ; 
+	  	memset( Tree , 0 , sizeof ( Tree )) ;  
+	  	for ( ll  i = 0 ; i < n ; i ++ ) 
+	  		 arr [ i ] = 0 ; 
+	  	
+	  	while ( q-- )
+	  	{
+	  		ll  t , a , b , c ; 
+	  		cin >> t ; 
+	  		if ( t == 1 )
+	  		{
+	  			cin  >> a >> b ; 
+	  			a-- , b -- ; 
+	  			cout << query ( 0 , n - 1 , 0 , a ,  b , Tree , Lazy ) << endl ; 
+	  			/*for ( ll  i = 0 ; i < 15  ; i ++ )
+	  			{
+	  				cout << Tree [ i ] << " " ; 
+	  			}
+	  			
+	  			cout << endl ; 
+	  			  			for ( ll  i = 0 ; i < 15 ; i ++ )
+	  			{
+	  				cout << Lazy [ i ] << " " ; 
+	  			}
+	  			
+	  			cout << endl ; */
+	  		 
+	  		}
+	  		else
+	  		{
+	  			cin >> a >> b >> c ; 
+	  			a-- , b -- ; 
+	  			update ( 0 , n - 1  , 0 , a, b , c , Tree , Lazy  ) ; 
+	  			//cout << endl  ; 
+	  			/*for ( ll  i = 0 ; i < 15  ; i ++ )
+	  			{
+	  				cout << Tree [ i ] << " " ; 
+	  			}
+	  			
+	  			cout << endl ; 
+	  			  			for ( ll  i = 0 ; i < 15 ; i ++ )
+	  			{
+	  				cout << Lazy [ i ] << " " ; 
+	  			}
+	  			
+	  			cout << endl ; */
+	  		}
+	  	}
+  	}
+	
+}
