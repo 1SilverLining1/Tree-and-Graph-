@@ -1,0 +1,27 @@
+//https://practice.geeksforgeeks.org/problems/check-for-bst/1
+
+
+bool  isBSTutil ( Node* root , int &prev )
+{
+   if ( root == NULL )
+    return 1 ; 
+    
+    int x = isBSTutil ( root ->left , prev ) ;
+    int val = 1 ;
+    if ( root -> data  <= prev )
+        return  0 ; 
+    //cout << root -> data << " " ; 
+    prev = root-> data ; 
+    int y = isBSTutil ( root -> right , prev ) ;
+    
+    return val and x and y ;  
+    
+}
+bool isBST(Node* root) {
+    
+   //inorder ( root ) ; 
+   int prev = 0 ; 
+    return isBSTutil ( root , prev );
+}
+
+
