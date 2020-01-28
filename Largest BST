@@ -1,0 +1,64 @@
+
+//https://practice.geeksforgeeks.org/problems/largest-bst/1
+struct info 
+{
+    bool isbst ; 
+    int size ; 
+    int maxi , mini ; 
+};
+info util ( Node * root )
+{
+    if ( root == NULL )
+    {
+        info temp = { 1 , 0 , INT_MIN , INT_MAX  } ; 
+        return temp ; 
+    }
+    if ( root -> left == NULL and root -> right == NULL )
+    {
+        info temp = { 1 , 1 , root -> data  , root -> data } ; 
+        return temp ; 
+    }
+    
+    info left = util ( root -> left ) ; 
+    info right = util ( root -> right ) ; 
+    if ( left.isbst == 0 or right .isbst == 0 )
+    {
+        info temp = { 0 , max ( left.size , right . size) , INT_MIN , INT_MAX } ; 
+        return temp ; 
+    }
+    else 
+    {
+        if ( left.maxi>= root -> data )
+        {
+             info temp = { 0 , max ( left.size , right.size) , INT_MIN , INT_MAX } ; 
+             return temp ; 
+        }
+        else if ( right.mini <= root -> data )
+        {
+             info temp = { 0 , max ( left.size , right.size) , INT_MIN , INT_MAX } ; 
+            return temp ; 
+        }
+        else 
+        {
+             info temp ; 
+             temp.isbst =  1 ; 
+             temp.size = left.size + right.size + 1  ;
+             if ( left.size ==0 )
+                temp.mini = root -> data ;
+            else 
+                temp.mini = left.mini ; 
+            if ( right.size == 0 )
+                temp.maxi = root -> data ; 
+            else 
+                temp.maxi = right. maxi  ;
+             return temp ; 
+        }
+    }
+}
+int largestBst(Node *root)
+{
+    
+    info in = util ( root ) ; 
+    return in.size ; 
+    
+}
