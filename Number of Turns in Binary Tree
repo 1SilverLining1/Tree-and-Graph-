@@ -1,0 +1,70 @@
+//https://practice.geeksforgeeks.org/problems/number-of-turns-in-binary-tree/1
+
+
+Node * LCA ( Node * root , int first , int second )
+{
+    if ( root== NULL )
+        return NULL ; 
+    
+    if ( root -> key == first or root -> key == second )
+        return root ; 
+        
+    Node* left = LCA ( root -> left , first , second ) ; 
+    Node*  right = LCA ( root -> right , first , second ) ;
+
+    if ( right != NULL and left  != NULL )
+        return root ; 
+    else if ( left )
+        return left ;
+    else if ( right )
+        return right ; 
+    else
+    return NULL ; 
+}
+
+void Util ( Node * root , int first , int second , string s , string &s1 , string& s2  )
+{
+   //cout << s << " " << s1<< " " << s2 << " ***" << endl ; 
+    if ( root == NULL )
+        return ; 
+ 
+    if ( root -> key == first )
+        s1 = s ; 
+    if ( root -> key == second )
+        s2 = s ; 
+    string ss1 = s + 'L' ; 
+    string ss2 = s + 'R' ; 
+    Util ( root -> left , first , second , ss1 , s1 , s2 ); 
+    Util ( root -> right , first , second , ss2 , s1 , s2 ) ; 
+}
+// fundtion should return the number of turns 
+// form first node to second node
+int NumberOFTurn(struct Node* root, int first, int second)
+{
+    
+    Node * lca = LCA ( root , first , second ) ;
+   //cout << lca -> key << endl ; 
+    string s = "", s1 = "", s2 =""  ; 
+    Util ( lca  , first , second , s , s1 , s2 ) ;
+    int ans = 0 ;
+    //cout << s1 << " " << s2 << " " << s << endl ; 
+    for ( int i = 0 ; i < s1.length() ;)
+    {
+        ans ++ ; 
+        char ch = s1 [ i ] ;
+        i++ ; 
+        while (i < s1.length() &&  s1[ i ] == ch )
+            i++ ; 
+    }
+    for ( int i = 0 ; i < s2.length() ;)
+    {
+        ans ++ ; 
+        char ch = s2 [ i ] ;
+        i++ ; 
+        while (i < s2.length() &&  s2[ i ] == ch )
+            i++ ; 
+    }
+    
+    return ans  - 1 ; 
+	// Code here
+}
