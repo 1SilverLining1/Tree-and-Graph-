@@ -1,0 +1,37 @@
+//https://practice.geeksforgeeks.org/problems/print-all-nodes-that-dont-have-sibling/1
+
+
+void printSibling(Node* node)
+{
+    
+    
+    queue < Node * > q ; 
+    q.push (  node ) ;  
+    vector < int > v ; 
+    while ( !q.empty() )
+    {
+        Node * temp = q.front() ; 
+        q.pop() ; 
+        if ( temp -> left == NULL and temp -> right != NULL )
+            v.push_back ( temp -> right -> data ) ; 
+        
+        
+        if ( temp -> left != NULL and temp -> right == NULL )
+            v.push_back ( temp -> left -> data ) ; 
+            
+        if ( temp -> left )
+            q.push ( temp -> left ) ; 
+        if ( temp -> right )
+            q.push ( temp -> right ) ; 
+            
+    }
+    sort ( v.begin() , v.end() ) ; 
+    if ( v.size() == 0 )
+        cout << -1 ; 
+    else 
+    {
+        for ( auto i : v )
+            cout << i << " " ; 
+    }
+   // Your code here
+}
