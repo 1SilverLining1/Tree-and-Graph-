@@ -1,0 +1,29 @@
+//https://practice.geeksforgeeks.org/problems/longest-consecutive-sequence-in-binary-tree/1
+
+
+void dfs ( Node * root , int last  , int len , int &ans )
+{
+     
+    if ( root == NULL )
+        return ; 
+        
+    if ( last == root -> data - 1 )
+    {
+        ans = max ( ans , len + 1 ) ; 
+        dfs ( root -> left ,  root -> data  , len + 1 , ans ) ; 
+        dfs ( root -> right , root -> data , len + 1 , ans ) ; 
+    }
+    else 
+    {
+        dfs ( root -> left ,  root -> data  , 1 ,ans  ) ; 
+        dfs ( root -> right , root -> data ,  1  , ans  ) ;
+    }
+}
+
+int longestConsecutive(Node* root)
+{
+    int ans = -1 ; 
+    dfs ( root , INT_MAX  ,  1 , ans ) ; 
+    return ans ; 
+     //Code here
+}
