@@ -1,0 +1,30 @@
+//https://practice.geeksforgeeks.org/problems/binary-tree-to-cdll/1
+
+
+
+void inorder ( Node * root ,  Node* & prev ,  Node* & head , Node * & last )
+{
+     if ( root ==NULL )
+        return ; 
+        
+    inorder ( root -> left , prev , head , last   ) ; 
+    if ( head == NULL )
+        head = root ; 
+    last = root ;
+    if ( prev )
+        prev -> right = root ; 
+    root -> left = prev ; 
+    prev = root ; 
+    inorder ( root -> right  , prev , head , last ) ;
+    
+}
+Node *bTreeToCList(Node *root)
+{
+    
+    
+   Node * head = NULL , *last = NULL , *prev = NULL ; 
+    inorder ( root , prev ,  head , last ) ; 
+    head  -> left = last ;
+    last -> right = head ; 
+    return head ; 
+}
