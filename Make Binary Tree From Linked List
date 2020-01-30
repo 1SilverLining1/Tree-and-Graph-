@@ -1,0 +1,44 @@
+TreeNode * construct ( int arr[] , int index , int n )
+{
+    if ( index >= n ) 
+        return NULL ; 
+    
+    TreeNode * node = new TreeNode(arr [ index ]) ; 
+    node -> left = construct ( arr , 2 * index + 1 , n ) ; 
+    node -> right = construct ( arr , 2 * index + 2  , n ) ; 
+    return node ; 
+}
+/*You are required to complete this method*/
+void convert(Node *head, TreeNode *&root) {
+    
+    queue < TreeNode * > q ;
+    TreeNode *node = new TreeNode ( head -> data ) ; 
+    q.push ( node ) ; 
+    root = node ; 
+    head = head -> next ;
+    while ( !q.empty()  )
+    {
+        TreeNode * temp = q.front() ; 
+        q.pop() ; 
+        if ( head )
+            temp -> left = new TreeNode ( head -> data )  ;
+        else 
+            temp -> left = NULL ; 
+        if ( temp -> left )  
+            q.push ( temp -> left  ) ; 
+        if ( head )
+            head = head -> next  ; 
+        if ( head )
+            temp -> right = new TreeNode ( head -> data ) ;
+        else 
+            temp -> right = NULL ; 
+        if ( head )
+        {
+                q.push ( temp -> right  ) ; 
+                head = head -> next ; 
+        }
+        else 
+                head = NULL ; 
+    }
+   
+}
