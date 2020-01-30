@@ -1,0 +1,34 @@
+//https://practice.geeksforgeeks.org/problems/leaves-to-dll/1
+
+
+
+void inorder ( Node * root , Node *&prev , Node *& head, Node * & last )
+{
+    if ( root == NULL )
+        return ; 
+        
+    inorder ( root -> left , prev , head ,  last ) ; 
+    if ( root -> left == NULL  and root -> right == NULL )
+    {
+        if ( head == NULL )
+            head = root ; 
+        last = root ; 
+        if (prev )
+            prev -> right = root ; 
+        root -> left = prev ; 
+        prev = root ; 
+    }
+    
+    inorder ( root -> right , prev , head , last  ) ; 
+}
+Node *convertToDLL(Node *root,Node **head_ref)
+{
+        Node * head = NULL , *prev = NULL, * last = NULL  ; 
+        
+        inorder ( root , prev , head , last ) ;
+        //cout << head -> data << "*****" ; 
+        *head_ref = head  ; 
+        return head ; 
+    
+//add code here.
+}
