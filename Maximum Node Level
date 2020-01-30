@@ -1,0 +1,35 @@
+
+//https://practice.geeksforgeeks.org/problems/maximum-node-level/1
+
+
+int maxNodeLevel(Node *root)
+{
+    
+       int ans = 0 , level = 0 , maxi = 0  ; 
+        queue < Node* > q ; 
+        q.push ( root ) ; 
+        while ( !q.empty() )
+        {
+            int x = q.size() ; 
+            if ( maxi  < x )
+            {
+                maxi = x ;
+                ans = level ; 
+            }
+            for ( int i = 0 ; i < x ; i ++ )
+            {
+                Node * temp = q.front() ; 
+                q.pop() ; 
+                if ( temp -> left )
+                    q.push ( temp -> left ) ; 
+                
+                if ( temp -> right )
+                    q.push ( temp -> right ) ; 
+            }
+            level ++ ; 
+        }
+        
+        return ans ; 
+        
+ // Add your code here
+}
