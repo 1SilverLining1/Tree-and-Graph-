@@ -1,0 +1,8 @@
+TreeNode * ReverseInorder ( TreeNode *root)
+    {
+        if ( root == NULL )
+                return NULL ; 
+        ReverseInorder ( root -> right ) ; 
+        cout << root -> data << " " ; 
+        ReverseInorder ( root -> left) ; 
+    }
