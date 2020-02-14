@@ -1,0 +1,32 @@
+
+
+ while ( current )
+        {
+            
+            if ( current -> right == NULL )
+            {
+               
+                current = current -> left ; 
+            }
+            else 
+            {
+                TreeNode * pre = current -> right  ; 
+                while ( pre -> left  != NULL and pre -> left  != current )
+                        pre = pre -> left ; 
+                if ( pre -> left == NULL )
+                {
+                   
+                   pre -> left = current ; 
+                    current = current -> right  ; 
+                }
+                else 
+                {
+                   
+                    pre -> left = NULL ; 
+                    current = current -> left ; 
+                }
+            }
+            
+        }
+        
+        
