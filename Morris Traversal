@@ -1,0 +1,45 @@
+//https://www.geeksforgeeks.org/inorder-tree-traversal-without-recursion-and-without-stack/
+
+  struct TreeNode {
+     int val;
+      TreeNode *left;
+       TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+  };
+ 
+class Solution {
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+        
+        
+        vector < int > v ; 
+        TreeNode * current = root ; 
+        while ( current )
+        {
+            if ( current -> left == NULL )
+            {
+                v.push_back ( current -> val ) ; 
+                current = current -> right ; 
+            }
+            else 
+            {
+                TreeNode * pre = current -> left ; 
+                while ( pre -> right != NULL and pre -> right != current  )
+                        pre = pre -> right ; 
+                if ( pre -> right ==NULL )
+                {
+                    pre -> right = current ; 
+                    current = current -> left ; 
+                }
+                else 
+                {
+                    pre -> right = NULL ; 
+                    v.push_back ( current -> val ) ; 
+                    current = current -> right ; 
+                }
+                
+            }
+        }
+        
+        return v ; 
+    }
+};
