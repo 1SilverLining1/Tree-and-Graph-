@@ -1,0 +1,55 @@
+//https://leetcode.com/problems/house-robber-iii/
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    
+    
+    int  util ( TreeNode * root , int flag , int sum , map < pair < TreeNode * , int > , int  > &dp  )
+    {
+        
+        
+        
+        if ( dp.find( { root , flag } ) != dp.end() )
+                return dp [ { root , flag } ] ; 
+        if ( root == NULL )
+        {
+            dp [ { root , flag } ] = 0 ; 
+             return 0 ; 
+        
+        }
+           
+        
+        if ( flag == - 1 )
+        {
+            int ans1 = sum + util  (  root -> left  , flag * -1 , 0 , dp ) + util  ( root -> right , flag * -1 , 0 , dp ) ;
+            dp [ { root , flag } ] = ans1 ; 
+            return ans1 ; 
+        }
+        else 
+        {
+            int ans1 = sum +  util ( root -> left , 1 , 0 , dp  ) + util ( root -> right , 1 , 0 , dp ) ;
+            int ans2 = sum + root -> val+ util ( root -> left , flag * -1 , 0 , dp ) + util ( root -> right , flag * -1 , 0 , dp ) ;
+            return dp [ { root , flag } ] = max ( ans1 , ans2 ) ; 
+        }
+        
+       
+        
+    }
+    int rob(TreeNode* root) {
+        if ( !root )
+                return 0 ; 
+        map < pair < TreeNode * , int > , int  > dp ; 
+        int ans1 = root -> val + util  (  root -> left  , -1 , 0 , dp  ) + util  ( root -> right , -1 , 0 , dp ) ; 
+        int ans2 =  util  (  root -> left  , 1  , 0 , dp ) + util  ( root -> right , 1 , 0 , dp  ) ; 
+        return  max ( ans1 , ans2 ) ; 
+    }
+};
