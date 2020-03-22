@@ -1,0 +1,37 @@
+//https://leetcode.com/problems/invert-binary-tree/
+
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* invertTree(TreeNode* root) {
+        
+        if ( !root )
+                return root ; 
+        queue <TreeNode * > q ;
+        q.push ( root ) ; 
+        while ( !q.empty() )
+        {
+            TreeNode * temp = q.front() ; 
+            q.pop() ;
+            TreeNode * left = temp -> left ;
+            TreeNode * right = temp -> right ;
+            temp -> left = right ; 
+            temp -> right = left ;
+            if ( left )
+                q.push ( left ) ;
+            if ( right )
+                q.push ( right ) ; 
+            
+        }
+        return root ; 
+    }
+};
