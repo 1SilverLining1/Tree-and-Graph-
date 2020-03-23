@@ -1,0 +1,48 @@
+//https://leetcode.com/problems/course-schedule/
+
+
+class Solution {
+public:
+    
+    void dfs ( int x , int &flag , int visit [] , vector < int >  v [ 100005 ] , int white [ ])
+    {
+       if ( visit [ x ] == 1 )
+       {
+           flag = 0 ; 
+           return ; 
+       }
+        
+        visit [ x ] = 1 ; 
+        for ( auto i : v [ x ] )
+            dfs ( i , flag , visit , v , white ) ; 
+        white [ x ] = 0 ; 
+        visit [ x ] = 0 ; 
+    }
+    bool canFinish(int n, vector<vector<int>>& p) {
+        
+        
+        vector < int >  v [ 100005 ] ; 
+        for ( int i = 0 ; i < p.size() ; i ++ )
+        {
+             int x = p [ i ] [ 0 ] ; 
+             int y = p [ i ] [ 1 ] ; 
+             v[ y ].push_back ( x ) ; 
+        }
+        
+        int visit [ n ] , white[ n ] ;
+        memset (visit , 0 , sizeof ( visit ) ) ;
+        memset (visit , 1 , sizeof ( white ) ) ;
+        for ( int i = 0 ; i < n ; i ++ )
+        {
+            if ( white [ i ] )
+            {
+                int flag = 1 ; 
+                dfs ( i , flag , visit , v , white ) ;
+                if ( !flag )
+                    return flag ; 
+            }
+        }
+        
+        return 1 ; 
+    }
+};
