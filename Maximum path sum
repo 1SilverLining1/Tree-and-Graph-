@@ -1,0 +1,33 @@
+//https://practice.geeksforgeeks.org/problems/maximum-path-sum/1
+
+int util ( Node * root , int &ans )
+{
+        if ( !root )
+                return 0 ; 
+                
+        if ( !root -> left and !root -> right )
+            return root -> data ; 
+            
+        int left = util ( root -> left , ans ) ; 
+        
+        int right = util ( root -> right , ans ) ; 
+        
+        int maxi = INT_MIN ; 
+        
+        if ( root -> left ) 
+            maxi = max ( left +  root -> data , maxi ) ;
+        
+        if ( root -> right )
+            maxi = max ( maxi , right + root -> data ) ; 
+        
+        if ( root -> left and root -> right )
+            ans = max(  ans , left + right + root -> data   )  ;
+        
+        return maxi ; 
+}
+int maxPathSum(Node *root) {
+    
+        int ans = INT_MIN ;
+        util ( root , ans ) ; 
+        return ans ; 
+}
