@@ -1,0 +1,38 @@
+//https://leetcode.com/problems/path-sum-iii/
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    
+    void util ( TreeNode* root, int temp, int sum , map < int , int > mp , int &ans  )
+    {
+         
+        if ( !root )
+                return ; 
+        temp += root -> val ; 
+        if ( mp [ temp   - sum ] != 0 )
+            ans += mp [ temp   - sum  ] ;
+         mp [ temp ] ++ ; 
+        util ( root -> left , temp , sum , mp ,ans ) ; 
+        util ( root -> right , temp , sum , mp , ans ) ; 
+    }
+    int pathSum(TreeNode* root, int sum) {
+        
+     
+        int ans = 0 ;
+        map < int , int > mp ; 
+        mp [ 0 ] = 1 ; 
+        util ( root , 0 , sum , mp , ans ) ; 
+       return ans ;
+     
+        
+    }
+};
