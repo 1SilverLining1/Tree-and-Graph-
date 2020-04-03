@@ -1,0 +1,33 @@
+//https://practice.geeksforgeeks.org/problems/topological-sort/1/
+
+
+int visit [ 100005 ] ; 
+stack < int > stk ; 
+void   util  ( int x  , vector<int> v[] )
+{
+            
+    if ( visit [ x ] )
+                return ; 
+    visit [ x ] = 1 ; 
+    for ( auto i : v [ x ] )
+                util ( i , v ) ; 
+    stk.push ( x ) ;
+    
+}
+int* topoSort(int V, vector<int> adj[]) {
+   
+    memset ( visit , 0 , sizeof ( visit ) ) ; 
+    int *ans = new int [ V] ; 
+    int k = 0 ; 
+    for ( int i = 0 ; i < V ; i ++ )
+            if ( !visit [ i ]  )
+                util (  i  , adj ) ;  
+       
+    while ( !stk.empty() )
+    {
+        ans[ k ++] =   stk.top()  ; 
+        stk.pop() ; 
+    }
+            
+    return ans ; 
+}
