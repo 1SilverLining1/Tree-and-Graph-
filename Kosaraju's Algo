@@ -1,0 +1,67 @@
+//https://practice.geeksforgeeks.org/problems/strongly-connected-components-kosarajus-algo/1
+
+
+
+
+void dfs ( int x , bool visit[] , stack < int > &stk , vector<int> v[]  )
+{
+   
+    if ( visit[ x ] )
+        return ; 
+        
+    visit [ x ] = 1 ; 
+    
+    for ( auto i : v [ x ] )
+        dfs ( i , visit , stk , v ) ; 
+    
+    stk.push ( x ) ; 
+}
+void DfSUtil ( int x , bool visit[]  , vector<int> v[] ) 
+{
+     if ( visit[ x ] )
+        return ; 
+        
+    visit [ x ] = 1 ; 
+    
+    for ( auto i : v [ x ] )
+        DfSUtil ( i , visit , v ) ; 
+    
+    
+}
+int kosaraju(int V, vector<int> v[])
+{
+    
+    
+    stack < int > stk ; 
+    bool visit [ V ] ; 
+    memset ( visit , 0 , sizeof ( visit ) ) ; 
+    for ( int i = 0 ; i < V ; i ++ )
+    {
+        if ( !visit [ i ] )
+            dfs ( i ,  visit , stk , v  ) ; 
+    }
+    
+    
+    vector<int> C [ V ] ; 
+    for ( int i = 0 ; i < V; i ++ )
+        for ( auto j : v [ i ] )
+            C [ j ].push_back ( i ) ; 
+        
+    
+    int ans = 0 ; 
+    memset ( visit , 0 , sizeof ( visit ) ) ; 
+    while ( !stk.empty() )
+    {
+        int x = stk.top() ; 
+        stk.pop() ; 
+        if ( !visit [ x ] )
+        {
+             DfSUtil ( x , visit , C ) ;
+             ans ++ ; 
+        }
+    }
+    
+    
+    return ans ; 
+
+}
