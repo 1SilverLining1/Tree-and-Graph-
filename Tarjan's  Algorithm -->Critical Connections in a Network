@@ -1,0 +1,97 @@
+//https://leetcode.com/problems/critical-connections-in-a-network/
+
+
+class Solution {
+public:
+    
+    bool * visit ; 
+    int * parent ; 
+    int * DT ; 
+    int * low ; 
+    int V ; 
+    int time ; 
+    vector<vector<int>> ans ; 
+    
+    void dfs ( int x ,  vector < int > graph [ ] )
+    {
+        
+       // cout << x << " "  ; 
+        visit [ x ] = 1 ; 
+        DT [ x ] = low [ x ] = ++time ; 
+        
+        for ( auto y : graph [ x ] )
+        {
+            if ( y == parent [ x ] ) 
+                    continue ; 
+            else if ( visit [ y ] )
+                    low [ x ] = min ( low [ x ] , low [ y ] ) ; // why not low [ y ] ; 
+            else 
+            {
+                parent [ y ] = x ; 
+                dfs ( y , graph ) ; 
+                low [ x ] = min ( low [ x ] , low [ y ] ) ;
+                
+                if ( low [ y ] > DT [ x ] )
+                {
+                    vector < int > temp ;
+                    temp.push_back ( x ) ; 
+                    temp.push_back ( y ) ;  
+                    ans.push_back ( temp ) ; 
+                }
+                   
+                
+            }
+        }
+        
+    }
+    
+    
+    vector<vector<int>> criticalConnections(int n, vector<vector<int>>& connections) {
+        
+        if ( !n )
+                return ans ; 
+        
+        vector < int > graph [ n ] ; 
+        for ( auto i : connections )
+        {
+            graph [ i [ 0 ] ].push_back ( i [ 1 ] ) ;
+            graph [ i [ 1 ] ].push_back ( i [ 0 ] ) ;
+        }
+        
+        
+       /* for ( int i = 0 ; i < n ; i ++ )
+        {
+            for ( auto j : graph [ i ] )
+                    cout << j << " " ; 
+            cout << endl ; 
+        }*/
+        V = n ; 
+        time = 0 ; 
+        visit = new bool [ V ] ; 
+        parent = new int [ V ] ; 
+        DT = new int [ V ]  ; 
+        low = new int [ V ] ; 
+        for ( int i = 0 ; i < n ; i ++ )
+        {
+            visit[ i ] = 0 ; 
+            parent [ i ] = -1 ; 
+            DT [ i ] = 0 ; 
+            low [ i ] = 0 ; 
+        }
+       /* memset ( visit , 0 , sizeof ( visit ) * n  ) ;
+        memset ( parent , -1 , sizeof ( parent ) *n ) ;
+        memset ( DT , 0 , sizeof ( DT ) * n  ) ;
+        memset ( low , 0 , sizeof ( low ) * n ) ; */
+        
+        
+        
+        for ( int i = 0 ; i < n ; i ++ )
+        {
+            if ( !visit [ i ] )
+                dfs ( i , graph) ; 
+            
+        }
+        return ans ; 
+        
+    }
+};
